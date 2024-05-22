@@ -46,6 +46,7 @@ pod:
         rolling_update:
           max_unavailable: 10%
           max_surge: 25%
+  tolerations: {}
   debug:
     server: false
     dhcp_agent: false
@@ -209,6 +210,7 @@ aci:
   apic_application_profile: converged_cloud_openstack
   support_remote_mac_clear: 'True'
   sync_allocations: 'True'
+  sync_allocations_done_file_path: "/tmp/aci-sync-allocations-done"
   # apic_hosts: null
   # apic_user: null
   # apic_password: null
@@ -270,6 +272,7 @@ hypervisors_vmware: []
 # SFTP-swift bridge (e.g. for nsx-t backups in control-plane)
 sftp:
   enabled: false
+  server_key:
   externalIPs: []
   user: db_backup
   logins:
@@ -370,7 +373,7 @@ mariadb:
   buffer_pool_size: "4096M"
   log_file_size: "1024M"
   name: neutron
-  initdb_configmap: neutron-initdb
+  initdb_secret: true
   vpa:
     set_main_container: true
   persistence_claim:
@@ -545,6 +548,7 @@ mysql_metrics:
           host AS hostgroup,
           COUNT(*) AS value
         FROM aci_port_binding_allocations
+        JOIN (SELECT physical_network pn FROM ml2_vlan_allocations GROUP BY pn) AS mva ON mva.pn = host
         GROUP BY host;
       values:
       - "value"
@@ -557,6 +561,7 @@ mysql_metrics:
           host AS hostgroup,
           SUM(segment_id IS NULL) AS value
         FROM aci_port_binding_allocations
+        JOIN (SELECT physical_network pn FROM ml2_vlan_allocations GROUP BY pn) AS mva ON mva.pn = host
         GROUP BY host;
       values:
       - "value"

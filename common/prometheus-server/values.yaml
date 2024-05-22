@@ -20,7 +20,6 @@ global:
   # targets:
 
   linkerd_requested: false
-  linkerd_enabled: false
 
 # The image for the Prometheus server. The tag equals the .Chart.appVersion.
 image:
@@ -35,7 +34,7 @@ name:
 # names:
 
 # Defines how long data is stored. Format: `[0-9]+(ms|s|m|h|d|w|y)`
-retentionTime: 7d
+retentionTime: 12h
 
 # Reference a secret containing additional Prometheus scrape configurations.
 # Injecting an invalid configuration might break the Prometheus server instance.

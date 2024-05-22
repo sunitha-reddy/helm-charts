@@ -37,7 +37,7 @@ pod:
     central: 3
     mdns: 2
     poolmanager: 1
-    producer: 2
+    producer: 4
     worker: 3
     sink: 1
   lifecycle:
@@ -71,9 +71,9 @@ quota_api_export_size: 100000
 
 worker_enabled: True
 worker_notify: True
-worker_poll_timeout: '15'
-worker_poll_retry_interval: '10'
-worker_poll_max_retries: '80'
+worker_poll_timeout: '20'
+worker_poll_retry_interval: '15'
+worker_poll_max_retries: '100'
 worker_threshold_percentage: '100'
 worker_all_tcp: True
 
@@ -92,7 +92,7 @@ proxysql:
 mariadb:
   enabled: true
   name: designate
-  initdb_configmap: designate-initdb
+  initdb_secret: designate-initdb
   persistence_claim:
     name: db-designate-pvclaim
   alerts:
@@ -287,6 +287,9 @@ rabbitmq:
     enabled: true
     sidecar:
       enabled: false 
+    enableDetailedMetrics: true
+    enablePerObjectMetrics: true
+
 rabbitmq_cluster:
   enabled: false
   use_alternate_registry: true
@@ -358,6 +361,8 @@ alerts:
 
 osprofiler:
   enabled: false
+
+coordinationBackend: "file"
 
 owner-info:
   support-group: network-api
