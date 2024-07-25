@@ -124,13 +124,16 @@ logging:
   loggers:
     root:
       handlers: stdout, sentry
-      level: WARNING
+      level: DEBUG
+      # level: WARNING
     migrate:
       handlers: stdout, sentry
-      level: INFO
+      level: DEBUG
+      # level: INFO
     masakari:
       handlers: stdout, sentry
-      level: INFO
+      level: DEBUG
+      # level: INFO
 
 # Deploy Prometheus alerts.
 alerts:

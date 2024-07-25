@@ -49,3 +49,9 @@ policy_file = /etc/masakari/policy.yaml
 
 [wsgi]
 api_paste_config = /var/lib/openstack/etc/masakari/api-paste.ini
+
+[host_failure]
+evacuate_all_instances = true
+
+[instance_failure]
+process_all_instances = true
