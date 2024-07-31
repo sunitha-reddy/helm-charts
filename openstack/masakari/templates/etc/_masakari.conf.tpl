@@ -1,10 +1,16 @@
 # masakari.conf
 [DEFAULT]
+{{- include "ini_sections.default_transport_url" . }}
 log_config_append = /etc/masakari/logging.ini
 state_path = /var/lib/masakari
 masakari_api_listen_port = {{ .Values.masakariApiPortInternal }}
-
+auth_strategy = keystone
 memcache_servers = {{ .Chart.Name }}-memcached.{{ include "svc_fqdn" . }}:{{ .Values.memcached.memcached.port | default 11211 }}
+
+os_privileged_user_tenant = service
+os_privileged_user_auth_url = {{.Values.global.keystone_api_endpoint_protocol_internal | default "http"}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal | default 5000}}/v3
+os_privileged_user_name = {{ .Values.global.masakari_service_user | default "masakari" }}
+os_privileged_user_password = {{ required ".Values.global.masakari_service_password is missing" .Values.global.masakari_service_password }}
 
 {{- include "ini_sections.logging_format" . }}
 

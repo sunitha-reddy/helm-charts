@@ -10,9 +10,6 @@ spec:
   - name: compute_admin
   - name: compute_viewer
   - name: cloud_compute_admin
-  - name: cloud_network_admin
-  - name: cloud_volume_admin
-  - name: cloud_baremetal_admin
 
   services:
   - name: masakari
@@ -39,4 +36,4 @@ spec:
       - project: service
         role: service
       - project: service
-        role: admin
+        role: cloud_compute_admin

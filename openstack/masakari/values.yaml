@@ -80,10 +80,6 @@ mariadb:
   initdb_secret: true
   persistence_claim:
     name: db-masakari-pvclaim
-  alerts:
-    support_group: compute-storage-api
-  persistence_claim:
-    name: db-masakari-pvclaim
     enabled: true
     autoprovision: true
   livenessProbe:
@@ -162,6 +158,7 @@ owner-info:
   helm-chart-url: https://github.com/sapcc/helm-charts/tree/master/openstack/masakari
 
 rabbitmq:
+  name: masakari
   alerts:
     support_group: compute-storage-api
   resources:
