@@ -2,7 +2,7 @@ containerImages:
   tenso:
     account: ccloud
     repository: tenso
-    tag: "20240924141331"
+    tag: "20240927034703"
     sources:
       - repo: https://github.com/sapcc/tenso.git
-        commit: d70095a725a78530d9cbedeac4bdd53572fd094b
+        commit: 3e0291b089c12be814fa8e4e92e9052cc59d7541
