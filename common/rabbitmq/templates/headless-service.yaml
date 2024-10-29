@@ -11,7 +11,7 @@ metadata:
 {{- end }}
 spec:
   selector:
-    app: {{ template "fullname" . }}
+    app.kubernetes.io/instance: {{ template "fullname" . }}
   publishNotReadyAddresses: true  # See https://www.rabbitmq.com/cluster-formation.html#peer-discovery-k8s
   clusterIP: None
 {{- end }}
