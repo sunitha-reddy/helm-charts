@@ -15,7 +15,7 @@ metadata:
     {{- end }}
 spec:
   selector:
-    app: {{ template "fullname" . }}
+    app.kubernetes.io/instance: {{ template "fullname" . }}
   ports:
   - name: memcache
     port: {{ default "11211" .Values.memcached.port }}
