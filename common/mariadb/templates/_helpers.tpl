@@ -85,8 +85,8 @@
   mariadb = desired component name
   job = object type
   config = provided function
-  include "memcached.labels" (list $ "version" "mariadb" "deployment" "database")
-  include "memcached.labels" (list $ "version" "mariadb" "job" "config")
+  include "mariadb.labels" (list $ "version" "mariadb" "deployment" "database")
+  include "mariadb.labels" (list $ "version" "mariadb" "job" "config")
 */}}
 {{- define "mariadb.labels" }}
 {{- $ := index . 0 }}
@@ -95,11 +95,26 @@
 {{- $function := index . 4 }}
 app.kubernetes.io/name: {{ $.Chart.Name }}
 app.kubernetes.io/instance: {{ $.Release.Name }}-{{ $.Chart.Name }}
-app.kubernetes.io/component: {{ $.Chart.Name }}-{{ $type }}-{{ $function }}
+app.kubernetes.io/component: {{ include "label.component" (list $component $type $function) }}
 app.kubernetes.io/part-of: {{ $.Release.Name }}
   {{- if eq (index . 1) "version" }}
 app.kubernetes.io/version: {{ $.Values.image | regexFind "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}" }}
 app.kubernetes.io/managed-by: "helm"
 helm.sh/chart: {{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}
   {{- end }}
+{{- end }}
+
+{{/*
+  Generate labels
+  mariadb = desired component name
+  job = object type
+  config = provided function
+  include "label.component" (list "mariadb" "deployment" "database")
+  include "label.component" (list "mariadb" "job" "config")
+*/}}
+{{- define "label.component" }}
+{{- $component := index . 0 }}
+{{- $type := index . 1 }}
+{{- $function := index . 2 }}
+{{- $component }}-{{ $type }}-{{ $function }}
 {{- end }}

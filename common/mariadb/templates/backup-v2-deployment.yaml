@@ -12,7 +12,7 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ include "fullName" . }}-backup
+      app.kubernetes.io/component: {{ include "label.component" (list "mariadb" "deployment" "backup") }}
   template:
     metadata:
       labels:
