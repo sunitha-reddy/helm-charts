@@ -140,13 +140,7 @@ spec:
   - metadata:
       name: rabbitmq-persistent-storage
       labels:
-        app: {{ template "fullname" . }}
-        {{- if .Values.volumeClaimTemplatesChartVersion }}
-        chart: "{{ .Chart.Name }}-{{ .Values.volumeClaimTemplatesChartVersion }}"
-        {{- end }}
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
-        component: rabbitmq
+        {{- include "rabbitmq.labels" (list $ "noversion" "rabbitmq" "statefulset" "messagequeue") | indent 8 }}
     spec:
       accessModes:
       - {{ .Values.persistence.accessMode | quote }}
