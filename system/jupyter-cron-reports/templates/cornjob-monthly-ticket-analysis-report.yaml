@@ -27,21 +27,21 @@ spec:
             - name: LINKERD_AWAIT_DISABLED
               value: "Linkerd was not enabled or not requested"
             {{- end }}
+            - name: approle_role_id
+              valueFrom:
+                secretKeyRef:
+                  name: jupyter-cron-reports-secrets
+                  key: approle_role_id
+            - name: approle_secret_id
+              valueFrom:
+                secretKeyRef:
+                  name: jupyter-cron-reports-secrets
+                  key: approle_secret_id
             - name: swift_url
               valueFrom:
                 secretKeyRef:
                   name: jupyter-cron-reports-secrets
-                  key: swift_url
-            - name: swift_password
-              valueFrom:
-                secretKeyRef:
-                  name: jupyter-cron-reports-secrets
-                  key: swift_password
-            - name: vault_token
-              valueFrom:
-                secretKeyRef:
-                  name: jupyter-cron-reports-secrets
-                  key: vault_token
+                  key:  swift_url
             securityContext:
               allowPrivilegeEscalation: false
           initContainers:
